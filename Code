@@ -1,0 +1,185 @@
+# ChatPYT.py
+
+class AI:
+    API = {}
+    Remove = ["!", "?", ".", "@", "*"]
+
+    @staticmethod
+    def AIchat(Q, AImark):
+        WordStore = []
+        AnswerMaker = []
+        Answer = ""
+        Let = 0
+        Message = ""
+        while Let < len(Q):
+            while Let < len(Q) and Q[Let] != " ":
+                if not Q[Let] in AI.Remove:
+                    Message += Q[Let]
+                Let += 1
+            if Message != "":
+                WordStore.append(Message)
+            Message = ""
+            Let += 1
+        responses = {
+            "hello": "Hi!",
+            "hi": "Hello!",
+            "hey": "Hey! how are you?",
+            "are": "I dont know.",
+            "how": "I dont know.",
+            "will": "Sorry but i cant.",
+            "can": "I dont know.",
+            "do": "I dont know.",
+            "name": "My name is ChatPYT!",
+            "joke": "Why dont skeletons fight? Because they dont have the guts!",
+            "wrong": "Sorry for my mistake! Ill make sure to be right from now on! →",
+            "make": "How?",
+            "love": "The only thing i love is python!",
+            "crush": "I dont have a crush.",
+            "version": "I dont have a version.",
+            "what": "I dont know.",
+            "made": "I was made by Dravine!",
+            "yes": "Okay!",
+            "no": "Okay!",
+            "okay": "Alr.",
+            "where": "I dont know.",
+            "i": "okay"
+        }
+        for word in WordStore:
+            response = responses.get(word.lower())
+            if response:
+                AnswerMaker.append(response)
+        Answer = " ".join(AnswerMaker)
+        if Answer == "":
+            print("Error 404: ChatPYT Dosen't Understand")
+        else:
+            if AImark == False:
+                return Answer
+            elif AImark == True:
+                return "ChatPYT: " + Answer
+
+    @staticmethod
+    def makeAI(name, version, question, resdict):
+        if not isinstance(resdict, dict):
+            if resdict.isdigit():
+                resdict = AI.API[resdict]
+        keys = list(resdict.keys())
+        for key in keys:
+            lower_key = key.lower()
+            if lower_key != key:
+                resdict[lower_key] = resdict.pop(key)
+        AnswerMaker = []
+        question = question.lower()
+        Qlist = question.split()
+        for item in Qlist:
+            item = item.strip(''.join(AI.Remove))
+            if item in resdict:
+                AnswerMaker.append(resdict[item])
+        return name + " " + version + ": " + " ".join(AnswerMaker)
+
+    @staticmethod
+    def AIcalc(calculate, AImark):
+        if not calculate == "":
+            if calculate[0] in "-0123456789()":
+                if AImark == True:
+                    return "ChatPYT: " + calculate + " is " + str(eval(calculate))
+                if AImark == False:
+                    return calculate + " is " + str(eval(calculate))
+            elif AImark == True:
+                print("ChatPYT: Using Code that could harm others is a big problem")
+            elif AImark == False:
+                print("Using Code that could harm others is a big problem")
+        elif AImark == True:
+            print("ChatPYT: You forgot to put anything in")
+        elif AImark == False:
+            print("You forgot to put anything in")
+
+    @staticmethod
+    def Create_Client_API(number, resdict):
+        AI.API[number] = resdict
+
+    @staticmethod
+    def EmptyAPI():
+        AI.API = {}
+
+    @staticmethod
+    def Get_API(number):
+        print(AI.API[number])
+
+    @staticmethod
+    def DeleteAPI(number):
+        AI.API[number] = {}
+
+    @staticmethod
+    def merge_words(w1, w2):
+        if len(w1) == len(w2):
+            return f"ChatPYT: {w1} merged with {w2} is {w1[0:round(len(w1) / 2)]}{w2[round(len(w1) / 2):len(w2)]}"
+        else:
+            if len(w1) > len(w2):
+                return f"ChatPYT: {w1} merged with {w2} is {w1[0:len(w1) - len(w2)]}{w2}"
+            elif len(w2) > len(w1):
+                return f"ChatPYT: {w1} merged with {w2} is {w2[0:len(w2) - len(w1)]}{w1}"
+
+    @staticmethod
+    def makeRanAI(name, version, question, resdict):
+        if not isinstance(resdict, dict):
+            if resdict.isdigit():
+                resdict = AI.API[resdict]
+        keys = list(resdict.keys())
+        for key in keys:
+            lower_key = key.lower()
+            if lower_key != key:
+                resdict[lower_key] = resdict.pop(key)
+        AnswerMaker = []
+        question = question.lower()
+        Qlist = question.split()
+        for item in Qlist:
+            random = id(object())
+            random = int(str(random)[0]) % 2
+            item = item.strip(''.join(AI.Remove))
+            if item in resdict:
+                AnswerMaker.append(resdict[item][random])
+        return name + " " + version + ": " + " ".join(AnswerMaker)
+
+def random_n(string):
+    if string == True:
+        return str(id(object()))
+    elif string == False:
+        return int(id(object()))
+
+def encode_binary(text):
+    encoded = ' '.join(format(ord(char), '08b') for char in text)
+    return encoded
+
+def decode_binary(text):
+    decoded = ''.join(chr(int(b, 2)) for b in text.split())
+    return decoded
+
+def random_b(string):
+    random = id(object())
+    random = int(str(random)[0]) % 2
+    if string == True:
+        return str(random)
+    elif string == False:
+        return int(random)
+
+class Bot:
+    @staticmethod
+    def makeBot(name, version, question, resdict):
+        return name + " " + version + ": " + resdict[question]
+
+    @staticmethod
+    def Botchat(Q, Botmark):
+        resdict = {
+            "Hello!": "Hi!",
+            "Hi!": "Hello!",
+            "Hello": "Hi",
+            "Hi": "Hello",
+            "How are you?": "I am good!",
+            "What is the time?": "I dunno",
+            "Where are you?": "Im in the code!",
+            "Hey!": "Hey! Hello!"
+        }
+        if Botmark == True:
+            return "PyBot: " + resdict[Q]
+        elif Botmark == False:
+            return resdict[Q]
